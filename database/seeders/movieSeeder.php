@@ -17,7 +17,7 @@ class movieSeeder extends Seeder
      */
     public function run()
     {
-        Movie::factory()->count(40)->make()->each(function ($m) {
+        Movie::factory()->count(80)->make()->each(function ($m) {
             $genre = Genre::inRandomOrder()->first();
             $m->genre()->associate($genre);
             $m->save();
