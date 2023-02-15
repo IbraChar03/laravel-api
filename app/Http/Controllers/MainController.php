@@ -45,4 +45,10 @@ class MainController extends Controller
         $movie->tags()->attach($tags);
         return redirect()->route("movies");
     }
+    public function deleteMovie(Movie $movie)
+    {
+        $movie->tags()->sync([]);
+        $movie->delete();
+        return redirect()->route("movies");
+    }
 }

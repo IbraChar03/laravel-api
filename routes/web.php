@@ -8,3 +8,4 @@ Route::get('/', [MainController::class, "home"])->name("home");
 Route::get('/movies', [MainController::class, "movies"])->name("movies");
 Route::get('/createPage', [MainController::class, "createMoviePage"])->name("movie.createPage");
 Route::post('/createMovie', [MainController::class, "createMovie"])->name("movie.create");
+Route::get('/delete/{movie}', [MainController::class, "deleteMovie"])->name("movie.delete");
