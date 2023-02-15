@@ -2,8 +2,9 @@
 @section('content')
     <h1>CREATE A NEW MOVIE</h1>
       
-   <form action="" method="POST">
+   <form action="{{route('movie.create')}}" method="POST">
     @csrf
+    @include("components.errors")
     <label for="">Name : </label>
     <input type="text" name="name"> <br> <br>
     <label for="cashOut">Cash Out : </label>
@@ -18,5 +19,11 @@
         @endforeach
        
     </select> <br> <br>
+    <label for="">Tags : </label> <br>
+    @foreach ($tags as $tag)
+        <input type="checkbox" value={{$tag -> id}} name=tag[]> 
+        <label for="tag">{{$tag -> name}}</label> <br>
+    @endforeach
+    <input type="submit" value="Create">
    </form>
 @endsection

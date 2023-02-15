@@ -25,4 +25,24 @@ class MainController extends Controller
         $tags = Tag::all();
         return view("createMovie", compact("genres", "tags"));
     }
+    public function createMovie(Request $request)
+    {
+        $data = $request->validate([
+            "name" => ["string", "required"],
+            "year" => ["integer", "required"],
+            "cashOut" => ["integer", "required"],
+            "genre" => ["required"],
+            "tag" => ["required"]
+        ]);
+        $movie = new Movie();
+        $movie->name = $data["name"];
+        $movie->year = $data["year"];
+        $movie->cashOut = $data["cashOut"];
+        $genre = Genre::find($data["genre"]);
+        $movie->genre()->associate($genre);
+        $movie->save();
+        $tags = Tag::find([$data["tag"]]);
+        $movie->tags()->attach($tags);
+        return redirect()->route("movies");
+    }
 }
