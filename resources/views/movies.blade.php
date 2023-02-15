@@ -5,7 +5,8 @@
         @foreach ( $movies as $movie )
             <li>
                 <h3>{{$movie -> name}}</h3> 
-                <a href="{{route('movie.delete',$movie)}}">DELETE</a>    
+                <a href="{{route('movie.delete',$movie)}}">DELETE</a> 
+                <a href="{{route('movie.edit',$movie)}}">EDIT</a>     
             </li>
             <br>
             <hr>

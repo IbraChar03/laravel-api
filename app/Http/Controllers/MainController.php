@@ -51,4 +51,31 @@ class MainController extends Controller
         $movie->delete();
         return redirect()->route("movies");
     }
+    public function editMovie(Movie $movie)
+    {
+        $tags = Tag::all();
+        $genres = Genre::all();
+        return view("editMovie", compact("movie", "tags", "genres"));
+
+    }
+    public function updateMovie(Request $request, Movie $movie)
+    {
+        $data = $request->validate([
+            "name" => ["string", "required"],
+            "year" => ["integer", "required"],
+            "cashOut" => ["integer", "required"],
+            "genre" => ["required"],
+            "tag" => ["required"]
+        ]);
+
+        $movie->name = $data["name"];
+        $movie->year = $data["year"];
+        $movie->cashOut = $data["cashOut"];
+        $genre = Genre::find($data["genre"]);
+        $movie->genre()->associate($genre);
+        $movie->save();
+        $tags = Tag::find([$data["tag"]]);
+        $movie->tags()->attach($tags);
+        return redirect()->route("movies");
+    }
 }
