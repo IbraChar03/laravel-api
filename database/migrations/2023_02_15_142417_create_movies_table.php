@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->string("name");
             $table->year("year");
-            $table->boolean("cashOut");
+            $table->integer("cashOut");
             $table->timestamps();
         });
     }

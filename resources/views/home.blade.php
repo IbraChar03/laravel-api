@@ -2,6 +2,9 @@
 @section('content')
     <h1>GENRES AND MOVIES</h1>
     <h3>
+        <a href="{{route('movie.createPage')}}">Create a New Movie</a>
+    </h3>
+    <h3>
         <a href="{{route('movies')}}">Movies</a>
        </h3>
     <ul>

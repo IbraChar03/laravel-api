@@ -19,7 +19,7 @@ class movieFactory extends Factory
         return [
             "name" => fake()->words(2, true),
             "year" => fake()->year(),
-            "cashOut" => fake()->boolean()
+            "cashOut" => fake()->numberBetween(10, 500)
         ];
     }
 }
