@@ -1,6 +1,10 @@
 <script>
+import HeaderVue from "./components/HeaderVue.vue"
 import axios from "axios"
 export default {
+  components: {
+    HeaderVue
+  },
   data() {
     return {
       movies: [],
@@ -9,22 +13,30 @@ export default {
 
   },
   methods: {
+    moviesApi() {
+      axios.get("http://localhost:8000/api/movies")
+        .then(res => (
+          this.movies = res.data.movies
+
+        ))
+    },
     color() {
       this.title = document.getElementById("title");
-      this.title.style.color = "red";
+      this.title.style.color = "blue";
     }
   },
   mounted() {
-    axios.get("http://localhost:8000/api/movies")
-      .then(res => (
-        this.movies = res.data.movies,
-        console.log(this.data)
-      ))
+    this.moviesApi()
   }
+
 }
 </script>
 
 <template>
+  <header>
+    <HeaderVue />
+
+  </header>
   <h1 id="title"
     @click="color()">Movies</h1> <br>
   <ul>
