@@ -26,12 +26,14 @@ export default {
 
 <template>
   <h1 id="title"
-    @click="color()">Movies</h1>
+    @click="color()">Movies</h1> <br>
   <ul>
     <li v-for="movie in movies">
       <strong>Movie Name : </strong> {{ movie.name }} <br>
-      <strong>Release Year : </strong> {{ movie.year }}
+      <strong>Release Year : </strong> {{ movie.year }} <br>
+      <strong>Genre : </strong> {{ movie.genre.name }} <br> <br>
       <hr>
+      <br>
     </li>
 
 </ul>
