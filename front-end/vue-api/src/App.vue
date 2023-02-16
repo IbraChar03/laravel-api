@@ -31,9 +31,14 @@ export default {
     <li v-for="movie in movies">
       <strong>Movie Name : </strong> {{ movie.name }} <br>
       <strong>Release Year : </strong> {{ movie.year }} <br>
-      <strong>Genre : </strong> {{ movie.genre.name }} <br> <br>
-      <hr>
-      <br>
+      <strong>Genre : </strong> {{ movie.genre.name }} <br>
+      <strong>Tags : </strong>
+    <li v-for="tags in movie.tags">
+      {{ tags.name }}
+    </li> <br> <br>
+
+    <hr>
+    <br>
     </li>
 
 </ul>

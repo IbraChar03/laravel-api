@@ -9,7 +9,7 @@ class ApiController extends Controller
 {
     public function movies()
     {
-        $movies = Movie::with("genre")->get();
+        $movies = Movie::with("genre", "tags")->get();
         return response()->json([
             "success" => true,
             "movies" => $movies
