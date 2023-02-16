@@ -3,9 +3,16 @@ import axios from "axios"
 export default {
   data() {
     return {
-      movies: []
+      movies: [],
+      title: ""
     }
 
+  },
+  methods: {
+    color() {
+      this.title = document.getElementById("title");
+      this.title.style.color = "red";
+    }
   },
   mounted() {
     axios.get("http://localhost:8000/api/movies")
@@ -17,6 +24,17 @@ export default {
 }
 </script>
 
-<template><h1>Hello World</h1></template>
+<template>
+  <h1 id="title"
+    @click="color()">Movies</h1>
+  <ul>
+    <li v-for="movie in movies">
+      <strong>Movie Name : </strong> {{ movie.name }} <br>
+      <strong>Release Year : </strong> {{ movie.year }}
+      <hr>
+    </li>
+
+</ul>
+</template>
 
 <style></style>
