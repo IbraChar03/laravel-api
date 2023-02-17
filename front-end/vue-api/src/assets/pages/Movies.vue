@@ -16,12 +16,13 @@ export default {
     methods: {
         dataApi() {
             axios.get(this.API_URL + "data")
-                .then(res => (
+                .then(res => {
                     this.movies = res.data.response.movies,
-                    this.tags = res.data.response.tags,
-                    this.genres = res.data.response.genres
+                        this.tags = res.data.response.tags,
+                        this.genres = res.data.response.genres
+                }
 
-                ))
+                )
         },
         color() {
             this.title = document.getElementById("title");

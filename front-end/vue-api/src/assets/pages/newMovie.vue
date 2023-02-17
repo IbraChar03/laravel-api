@@ -36,15 +36,20 @@ export default {
                 "year": this.modelYear,
                 "name": this.modelName,
                 "cashOut": this.modelCashOut,
-                "tags": this.modelTags,
+                "tag": this.modelTags,
                 "genre": this.modelGenre
             };
             console.log("movie", movie);
             axios.post(this.API_URL + "create", movie)
                 .then(res => {
-
-                }),
-                e.preventDefault()
+                    const success = res.data.success;
+                    if (success) {
+                        this.dataApi()
+                    }
+                }).catch((errors) => {
+                    console.log(errors);
+                });
+            e.preventDefault()
         }
 
     },
