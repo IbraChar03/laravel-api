@@ -16,7 +16,7 @@ const router = createRouter({
             component: newMovie
         },
         {
-            path: '/editMovie',
+            path: '/editMovie/:id',
             name: 'editMovie',
             component: editMovie
         },
