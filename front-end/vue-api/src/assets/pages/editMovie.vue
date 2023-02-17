@@ -1,7 +1,7 @@
 <script>
 import axios from "axios"
 export default {
-    name: "categories",
+    name: "editMovie",
     data() {
         return {
             modelName: "",
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <template>
-    <h1>Create a New Movie</h1> <br>
+    <h1>Edit Movie</h1> <br>
     <form action="">
         <label for="">Name : </label>
         <input type="text"

@@ -61,7 +61,8 @@ export default {
         <li v-for="tags in movie.tags">
             {{ tags.name }}
         </li>
-        <button @click="deleteMovie(movie.id)">DELETE</button>
+        <button @click="deleteMovie(movie.id)">DELETE</button> <br>
+        <button> <router-link :to="{ name: 'editMovie' }">Edit</router-link></button>
         <br> <br>
 
         <hr>
