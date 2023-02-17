@@ -5,6 +5,11 @@ export default {
     name: "categories",
     data() {
         return {
+            modelName: "",
+            modelYear: "",
+            modelCashOut: "",
+            modelTags: [],
+            modelGenre: "",
             movies: [],
             tags: [],
             genres: [],
@@ -25,7 +30,23 @@ export default {
         color() {
             this.title = document.getElementById("title");
             this.title.style.color = "blue";
+        },
+        createMovie(e) {
+            const movie = {
+                "year": this.modelYear,
+                "name": this.modelName,
+                "cashOut": this.modelCashOut,
+                "tags": this.modelTags,
+                "genre": this.modelGenre
+            };
+            console.log("movie", movie);
+            axios.post(this.API_URL + "create", movie)
+                .then(res => {
+
+                }),
+                e.preventDefault()
         }
+
     },
     mounted() {
         this.dataApi()
@@ -37,21 +58,22 @@ export default {
 
 <template>
     <h1>Create a New Movie</h1> <br>
-    <form action=""
-        method="POST">
-
+    <form action="">
         <label for="">Name : </label>
         <input type="text"
-            name="name"> <br> <br>
+            name="name"
+            v-model="modelName"> <br> <br>
         <label for="cashOut">Cash Out : </label>
         <input type="integer"
-            name="cashOut"> <br> <br>
+            name="cashOut"
+            v-model="modelCashOut"> <br> <br>
         <label for="year">Year : </label>
         <input type="number"
-            name="year"> <br> <br>
+            name="year"
+            v-model="modelYear"> <br> <br>
         <label for="genre">Genre : </label>
         <select name="genre"
-            id="">
+            v-model="modelGenre">
 
             <option v-for="genre in genres"
                 :value="genre.id"
@@ -65,12 +87,15 @@ export default {
         <div v-for="tag in tags">
             <input type="checkbox"
                 :value="tag.id"
-                name=tag>
+                name=tag
+                v-model="modelTags">
             <label for="tag">{{ tag.name }}</label>
         </div> <br>
 
+
         <input type="submit"
-            value="Create">
+            @click="createMovie"
+            value="create">
     </form>
 </template>
 

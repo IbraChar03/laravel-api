@@ -5,6 +5,7 @@ export default {
     data() {
         return {
             movies: [],
+            thatMovie: "",
             tags: [],
             genres: [],
             title: "",
@@ -25,6 +26,16 @@ export default {
         color() {
             this.title = document.getElementById("title");
             this.title.style.color = "blue";
+        },
+        deleteMovie(movieId) {
+
+            axios.get(this.API_URL + "delete/" + movieId)
+                .then(res => {
+                    const success = res.data.success;
+                    if (success) {
+                        this.dataApi()
+                    }
+                })
         }
     },
     mounted() {
@@ -48,7 +59,9 @@ export default {
             <strong>Tags : </strong>
         <li v-for="tags in movie.tags">
             {{ tags.name }}
-        </li> <br> <br>
+        </li>
+        <button @click="deleteMovie(movie.id)">DELETE</button>
+        <br> <br>
 
         <hr>
         <br>
