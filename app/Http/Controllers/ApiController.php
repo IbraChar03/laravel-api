@@ -39,7 +39,7 @@ class ApiController extends Controller
             "year" => ["integer", "required"],
             "cashOut" => ["integer", "required"],
             "genre" => ["required"],
-            "tag" => ["required"]
+            "tag" => ["required", "array"]
         ]);
         $movie = new Movie();
         $movie->name = $data["name"];
@@ -71,7 +71,7 @@ class ApiController extends Controller
             "year" => ["integer", "required"],
             "cashOut" => ["integer", "required"],
             "genre" => ["required"],
-            "tag" => ["required"]
+            "tag" => ["required", "array"]
         ]);
 
         $movie->name = $data["name"];

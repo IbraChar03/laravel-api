@@ -4,6 +4,7 @@ export default {
     name: "editMovie",
     data() {
         return {
+            selectedCheck: [],
             movieObj: "",
             modelName: "",
             modelYear: "",
@@ -50,7 +51,7 @@ export default {
             for (let index = 0; index < this.movieObj.tags.length; index++) {
                 const element = this.movieObj.tags[index];
                 if (element.id == tag.id) {
-                    console.log(element.id);
+
                     return true;
 
                 }
@@ -58,12 +59,26 @@ export default {
             }
             return false;
         },
+        checkboxs() {
+            let check = document.getElementsByClassName("input");
+            for (let index = 0; index < check.length; index++) {
+                const element = check[index];
+                if (element.checked) {
+                    this.selectedCheck.push(element.value);
+
+                }
+
+            }
+            console.log(this.selectedCheck);
+            return this.selectedCheck;
+        },
         updateMovie(e) {
+
             const movie = {
                 "year": this.movieObj.year,
                 "name": this.movieObj.name,
                 "cashOut": this.movieObj.cashOut,
-                "tag": this.movieObj.tags,
+                "tag": this.checkboxs(),
                 "genre": this.movieObj.genre_id
             };
             axios.post(this.API_URL + "updateMovie/" + this.$route.params.id, movie)
@@ -136,13 +151,16 @@ export default {
                 <div v-for="tag in tags"
                     :key="tag.id">
                     <input type="checkbox"
+                        class="input"
                         :id="tag.id"
                         :value="tag.id"
                         name=tag
                         :checked="movieTags(tag)">
                     <label for="tag">{{ tag.name }}</label>
+
                 </div>
             </div>
+            <a @click="checkboxs">check</a>
         </div><br>
 
 
