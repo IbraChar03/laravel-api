@@ -13,12 +13,14 @@ const router = createRouter({
         {
             path: '/newMovie',
             name: 'newMovie',
-            component: newMovie
+            component: newMovie,
+
         },
         {
             path: '/editMovie/:id',
             name: 'editMovie',
-            component: editMovie
+            component: editMovie,
+
         },
     ]
 });

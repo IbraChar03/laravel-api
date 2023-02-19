@@ -55,4 +55,36 @@ class ApiController extends Controller
             "response" => $movie
         ]);
     }
+    public function getMovie($id)
+    {
+        $movie = Movie::find($id);
+        $movie["tags"] = $movie->tags;
+        return response()->json([
+            "success" => true,
+            "response" => $movie
+        ]);
+    }
+    public function updateMovie(Request $request, Movie $movie)
+    {
+        $data = $request->validate([
+            "name" => ["string", "required"],
+            "year" => ["integer", "required"],
+            "cashOut" => ["integer", "required"],
+            "genre" => ["required"],
+            "tag" => ["required"]
+        ]);
+
+        $movie->name = $data["name"];
+        $movie->year = $data["year"];
+        $movie->cashOut = $data["cashOut"];
+        $genre = Genre::find($data["genre"]);
+        $movie->genre()->associate($genre);
+        $movie->save();
+        $tags = Tag::find([$data["tag"]]);
+        $movie->tags()->attach($tags);
+        return response()->json([
+            "success" => true,
+            "response" => $movie
+        ]);
+    }
 }

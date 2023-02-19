@@ -4,6 +4,7 @@ export default {
     name: "editMovie",
     data() {
         return {
+            movieObj: "",
             modelName: "",
             modelYear: "",
             modelCashOut: "",
@@ -30,77 +31,124 @@ export default {
             this.title = document.getElementById("title");
             this.title.style.color = "blue";
         },
-        createMovie(e) {
+
+        logMovie() {
+            console.log(this.movieObj);
+        },
+        getMovie() {
+            axios.get(this.API_URL + "editMovie/" + this.$route.params.id)
+                .then(res => {
+                    this.movieObj = res.data.response;
+                    console.log(this.movieObj);
+
+
+                }).catch((errors) => {
+                    console.log(errors);
+                });
+        },
+        movieTags(tag) {
+            for (let index = 0; index < this.movieObj.tags.length; index++) {
+                const element = this.movieObj.tags[index];
+                if (element.id == tag.id) {
+                    console.log(element.id);
+                    return true;
+
+                }
+
+            }
+            return false;
+        },
+        updateMovie(e) {
             const movie = {
-                "year": this.modelYear,
-                "name": this.modelName,
-                "cashOut": this.modelCashOut,
-                "tag": this.modelTags,
-                "genre": this.modelGenre
+                "year": this.movieObj.year,
+                "name": this.movieObj.name,
+                "cashOut": this.movieObj.cashOut,
+                "tag": this.movieObj.tags,
+                "genre": this.movieObj.genre_id
             };
-            console.log("movie", movie);
-            axios.post(this.API_URL + "create", movie)
+            axios.post(this.API_URL + "updateMovie/" + this.$route.params.id, movie)
                 .then(res => {
                     const success = res.data.success;
-                    if (success) {
-                        this.dataApi()
-                    }
+                    const movie = res.data.response;
+
+
+
                 }).catch((errors) => {
                     console.log(errors);
                 });
             e.preventDefault()
+        },
 
-        }
+        // }
+        // forTags(tag) {
+        //     for (let index = 0; index < this.movieObj.tags.length; index++) {
+        //         const movieTag = this.movieObj.tags[index];
+        //         if (movieTag.id == tag.id) {
+        //             return true;
+        //         }
+
+        //     }
+        //     return false;
+        // }
 
     },
     mounted() {
         this.dataApi()
-    }
-
+        this.getMovie()
+    },
 
 }
 </script>
 
 <template>
-    <h1>Edit Movie</h1> <br>
+    <h1>Edit Movie</h1>
+    <br>
     <form action="">
-        <label for="">Name : </label>
+        <label for=""> <strong>Name : </strong> </label>
         <input type="text"
             name="name"
-            v-model="modelName"> <br> <br>
-        <label for="cashOut">Cash Out : </label>
+            v-model="movieObj.name"> <br> <br>
+        <label for="cashOut"> <strong>Cash Out : </strong> </label>
         <input type="integer"
             name="cashOut"
-            v-model="modelCashOut"> <br> <br>
-        <label for="year">Year : </label>
+            v-model="movieObj.cashOut"> <br> <br>
+        <label for="year"> <strong>Year : </strong> </label>
         <input type="number"
             name="year"
-            v-model="modelYear"> <br> <br>
-        <label for="genre">Genre : </label>
-        <select name="genre"
-            v-model="modelGenre">
+            v-model="movieObj.year"> <br> <br>
+        <label for="genre"> <strong>Genre : </strong> </label>
+        <select name="genre">
 
             <option v-for="genre in genres"
                 :value="genre.id"
-                :key="genre.id">
+                :key="genre.id"
+                :selected="movieObj.genre_id == genre.id">
                 {{ genre.name }}
             </option>
 
 
         </select> <br> <br>
-        <label for="">Tags : </label> <br>
-        <div v-for="tag in tags">
-            <input type="checkbox"
-                :value="tag.id"
-                name=tag
-                v-model="modelTags">
-            <label for="tag">{{ tag.name }}</label>
-        </div> <br>
+        <div>
+            <strong>Tags of this movie : </strong> <br><br>
+            <label for=""> <strong>Add or change Tags :</strong></label> <br>
+            <div class="form-tags"
+                v-if="movieObj.tags != undefined && movieObj.tags.length > 0">
+                <div v-for="tag in tags"
+                    :key="tag.id">
+                    <input type="checkbox"
+                        :id="tag.id"
+                        :value="tag.id"
+                        name=tag
+                        :checked="movieTags(tag)">
+                    <label for="tag">{{ tag.name }}</label>
+                </div>
+            </div>
+        </div><br>
 
 
         <input type="submit"
-            @click="createMovie"
-            value="create">
+            @click="updateMovie"
+            value="update">
     </form>
 </template>
 

@@ -22,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/v1/data', [ApiController::class, "data"])->name("api.data");
 Route::post('/v1/create', [ApiController::class, "createMovie"]);
 Route::get('/v1/delete/{movie}', [ApiController::class, "deleteMovie"]);
+Route::get('/v1/editMovie/{movie}', [ApiController::class, "getMovie"]);
+Route::post('/v1/updateMovie/{movie}', [ApiController::class, "updateMovie"]);

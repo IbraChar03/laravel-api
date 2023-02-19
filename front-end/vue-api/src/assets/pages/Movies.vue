@@ -37,7 +37,8 @@ export default {
                         this.dataApi()
                     }
                 })
-        }
+        },
+
     },
     mounted() {
         this.dataApi()
@@ -62,7 +63,10 @@ export default {
             {{ tags.name }}
         </li>
         <button @click="deleteMovie(movie.id)">DELETE</button> <br>
-        <button> <router-link :to="{ name: 'editMovie', params: { id: movie.id } }">Edit</router-link></button>
+        <button> <router-link :to="{ name: 'editMovie', params: { id: movie.id } }">Edit</router-link>
+
+        </button>
+
 
         <br> <br>
 
