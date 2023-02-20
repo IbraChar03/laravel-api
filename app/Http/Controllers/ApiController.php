@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Tag;
 use App\Models\Genre;
+use App\Mail\NewMovie;
+use App\Mail\updateMovie;
+use Illuminate\Support\Facades\Mail;
 
 class ApiController extends Controller
 {
@@ -50,6 +53,7 @@ class ApiController extends Controller
         $movie->save();
         $tags = Tag::find([$data["tag"]]);
         $movie->tags()->attach($tags);
+        Mail::to('dda@gmail.com')->send(new NewMovie($movie));
         return response()->json([
             "success" => true,
             "response" => $movie
@@ -82,6 +86,7 @@ class ApiController extends Controller
         $movie->save();
         $tags = Tag::find([$data["tag"]]);
         $movie->tags()->sync($tags);
+        Mail::to('dda@gmail.com')->send(new updateMovie($movie));
         return response()->json([
             "success" => true,
             "response" => $movie

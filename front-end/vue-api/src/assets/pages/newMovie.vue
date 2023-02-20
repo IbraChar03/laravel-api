@@ -42,15 +42,13 @@ export default {
             axios.post(this.API_URL + "create", movie)
                 .then(res => {
                     const success = res.data.success;
-                    if (success) {
-                        this.dataApi()
-                    }
+                    this.$router.push({ name: "movies" })
                 }).catch((errors) => {
                     console.log(errors);
                 });
 
             e.preventDefault()
-            this.$router.push({ name: "movies" })
+
 
         }
 
