@@ -48,7 +48,9 @@ export default {
                 }).catch((errors) => {
                     console.log(errors);
                 });
+
             e.preventDefault()
+            this.$router.push({ name: "movies" })
 
         }
 

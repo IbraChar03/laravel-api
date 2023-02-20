@@ -63,16 +63,22 @@ export default {
             let check = document.getElementsByClassName("input");
             for (let index = 0; index < check.length; index++) {
                 const element = check[index];
-                if (element.checked) {
-                    this.selectedCheck.push(element.value);
+                for (let index = 0; index < this.movieObj.tags.length; index++) {
+                    const el = this.movieObj.tags[index];
+                    if (el.id !== element.value && element.checked) {
+                        console.log(this.movieObj.tags);
+                        this.selectedCheck.push(element.value);
 
+                    }
                 }
+
 
             }
             console.log(this.selectedCheck);
             return this.selectedCheck;
         },
         updateMovie(e) {
+            e.preventDefault()
 
             const movie = {
                 "year": this.movieObj.year,
@@ -85,26 +91,17 @@ export default {
                 .then(res => {
                     const success = res.data.success;
                     const movie = res.data.response;
-
-
+                    if (success) {
+                        this.dataApi()
+                    }
 
                 }).catch((errors) => {
                     console.log(errors);
                 });
-            e.preventDefault()
+            this.$router.push({ name: 'movies' })
+
+
         },
-
-        // }
-        // forTags(tag) {
-        //     for (let index = 0; index < this.movieObj.tags.length; index++) {
-        //         const movieTag = this.movieObj.tags[index];
-        //         if (movieTag.id == tag.id) {
-        //             return true;
-        //         }
-
-        //     }
-        //     return false;
-        // }
 
     },
     mounted() {
@@ -132,7 +129,8 @@ export default {
             name="year"
             v-model="movieObj.year"> <br> <br>
         <label for="genre"> <strong>Genre : </strong> </label>
-        <select name="genre">
+        <select name="genre"
+            v-model="movieObj.genre_id">
 
             <option v-for="genre in genres"
                 :value="genre.id"
@@ -144,8 +142,7 @@ export default {
 
         </select> <br> <br>
         <div>
-            <strong>Tags of this movie : </strong> <br><br>
-            <label for=""> <strong>Add or change Tags :</strong></label> <br>
+            <label for=""> <strong>Tags :</strong></label>
             <div class="form-tags"
                 v-if="movieObj.tags != undefined && movieObj.tags.length > 0">
                 <div v-for="tag in tags"
@@ -156,11 +153,12 @@ export default {
                         :value="tag.id"
                         name=tag
                         :checked="movieTags(tag)">
+
                     <label for="tag">{{ tag.name }}</label>
 
                 </div>
             </div>
-            <a @click="checkboxs">check</a>
+
         </div><br>
 
 
