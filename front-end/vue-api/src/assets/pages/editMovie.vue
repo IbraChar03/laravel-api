@@ -91,20 +91,17 @@ export default {
                 .then(res => {
                     const success = res.data.success;
                     const movie = res.data.response;
-                    if (success) {
-                        this.dataApi()
-                    }
+
+                    this.$router.push({ name: 'movies' })
 
                 }).catch((errors) => {
                     console.log(errors);
                 });
-            this.$router.push({ name: 'movies' })
-
 
         },
 
     },
-    mounted() {
+    created() {
         this.dataApi()
         this.getMovie()
     },

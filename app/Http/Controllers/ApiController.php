@@ -81,7 +81,7 @@ class ApiController extends Controller
         $movie->genre()->associate($genre);
         $movie->save();
         $tags = Tag::find([$data["tag"]]);
-        $movie->tags()->attach($tags);
+        $movie->tags()->sync($tags);
         return response()->json([
             "success" => true,
             "response" => $movie

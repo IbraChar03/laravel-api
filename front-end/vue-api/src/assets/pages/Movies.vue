@@ -40,7 +40,7 @@ export default {
         },
 
     },
-    mounted() {
+    created() {
         this.dataApi()
     }
 
